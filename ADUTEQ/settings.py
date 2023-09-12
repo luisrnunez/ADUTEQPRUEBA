@@ -97,24 +97,24 @@ WSGI_APPLICATION = 'ADUTEQ.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": "dbaduteq",
-#         "USER": "postgres",
-#         "PASSWORD": "123",
-#         "HOST": "127.0.0.1",
-#         "PORT":"5432",
-#     }
-# }
-
 DATABASES = {
-    'default': dj_database_url.config(
-        # Feel free to alter this value to suit your needs.
-        default='postgresql://postgres:root@localhost:5432/dbaduteq',
-        conn_max_age=600
-    )
+    'default': {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "dbaduteq",
+        "USER": "postgres",
+        "PASSWORD": "123",
+        "HOST": "127.0.0.1",
+        "PORT":"5432",
+    }
 }
+
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         # Feel free to alter this value to suit your needs.
+#         default='postgresql://postgres:root@localhost:5432/dbaduteq',
+#         conn_max_age=600
+#     )
+# }
  
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -154,7 +154,8 @@ USE_THOUSAND_SEPARATOR = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 if not DEBUG:
     # Tell Django to copy statics to the `staticfiles` directory
     # in your application directory on Render.
