@@ -1,0 +1,69 @@
+<table class="socios-table">
+    <thead>
+        <tr>
+            <th scope="col">Proveedor</th>
+            <th scope="col">Deuda</th>
+            <th scope="col">Comision</th>
+            <th scope="col">Fecha creacion</th>
+            <th scope="col">Fecha de pago</th>
+            <th scope="col">Evidencia</th>
+            <th scope="col">Cancelado</th>
+            {% if periodo_seleccionado.activo %}
+            <th scope="col">Accion</th>
+            {% endif %}
+            <th scope="col">Evidencia</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pagosproveedo in pagosproveedor %}
+        <tr>
+            <td>{{ pagosproveedo.proveedor.nombre }}</td>
+            <td>$ {{ pagosproveedo.valor_total }}</td>
+            <td>{% if pagosproveedo.comision %}
+            $ {{ pagosproveedo.comision }}
+            {% endif %}</td>
+            <td>{{ pagosproveedo.fecha_creacion|date:"j - n - Y" }}</td>
+            <td>{{ pagosproveedo.fecha_pago|date:"j - n - Y" }}</td>
+            <td>
+                
+                {% if pagosproveedo.evidencia %}
+                <a href="{{ pagosproveedo.evidencia.url }}" target="_blank">
+                    <i style="font-size: xx-large;" class="far fa-file-pdf"></i>
+                </a>
+                {% else %}
+                Sin evidencia
+                {% endif %}
+            </td>
+            <td>
+                {% if pagosproveedo.valor_cancelado %}
+                <button class="green-button">
+                    SI
+                </button>
+                {% else %}
+                <button class="red-button">
+                    NO
+                </button>
+                {% endif %}
+            </td>
+            {% if periodo_seleccionado.activo %}
+            <td>
+                <button class="edit-btn"
+                    onclick="confirmarPago('{{ pagosproveedo.id }}','{{ pagosproveedo.proveedor.nombre }}','{{ pagosproveedo.valor_cancelado }}')">
+                    Registrar pago
+                </button>
+            </td>
+        {% endif %}
+         
+         
+            <td>
+                {% if pagosproveedo.valor_cancelado %}
+                <form action="{% url 'prop_presagregar_pdf' pagosproveedo.id %}">
+                    <button class="edit-btn">Editar</button>
+                </form>
+                {% endif %}
+            </td>
+         
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

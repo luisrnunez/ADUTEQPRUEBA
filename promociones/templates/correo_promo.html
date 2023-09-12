@@ -1,0 +1,100 @@
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #dcdcdc;
+            border-radius: 10px;
+        }
+        h2 {
+            color: #00b300;
+        }
+        h3 {
+            color: #00b300;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        img {
+            /* width: 100%; */
+            height: auto;
+            margin-top: 20px;
+            max-height: 400px;
+            margin: auto;
+        }
+        .footer {
+            margin-top: 20px;
+            color: #00b300;
+            text-align: center;
+        }
+        .image{
+            padding: 10px;
+            display: flex;
+            align-content: center;
+            flex-flow: row wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>
+            {% if promocion.tipo %}
+                Nueva Promoción: {{ promocion.titulo }}
+            {% else %}
+                Nuevo Comunicado: {{ promocion.titulo }}
+            {% endif %}
+        </h2>
+        <p><b>Estimado socio,</b></p>
+
+        {% if promocion.tipo %}
+            <p>¡Tenemos una nueva promoción que podría interesarte!</p>
+        {% else %}
+            <p>Te informamos:</p>
+        {% endif %}
+
+        {% if promocion.tipo %}
+            <h3>Detalles de la Promoción:</h3>
+            <ul>
+                <li><h3>Proveedor:</h3> <b>{{ promocion.proveedor }}</b></li>
+                <li><h3>Descripción:</h3> <b>{{ promocion.descripcion|safe }}</b></li>
+                <li><h3>Fecha de Inicio:</h3> <b>{{ promocion.fecha_inicio }}</b></li>
+                <li><h3>Fecha de Fin:</h3> <b>{{ promocion.fecha_fin }}</b></li>    
+            </ul>
+            {% else %}
+            <b>{{ promocion.descripcion }}</b>
+        {% endif %}
+        {% if promocion.imagen %}
+        <div class="image">
+            <img src="cid:promocion_imagen" alt="{{ promocion.imagen}}">    
+        </div>
+        {% endif %}
+
+        {% if promocion.tipo %}
+            <p>¡No te pierdas esta oportunidad!</p>
+        {% else %}
+            <p>Por favor, revisa el comunicado para más detalles.</p>
+        {% endif %}
+
+        <p class="footer">Saludos,<br>ADUTEQ</p>
+    </div>
+</body>
+</html>
+{% endblock %}
+
